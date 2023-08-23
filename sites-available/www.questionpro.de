@@ -31,8 +31,11 @@ server {
     location ~ /\.ht {
             deny all;
     }
+    location /xmlrpc.php {
+ 	 deny all;
+	}
 
-
+	
 
     listen 443 ssl; # managed by Certbot
     ssl_certificate /etc/letsencrypt/live/www.questionpro.de/fullchain.pem; # managed by Certbot
