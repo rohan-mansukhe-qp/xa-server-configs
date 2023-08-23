@@ -1,0 +1,52 @@
+server {
+
+       server_name wplabs.questionpro.de;
+
+       root /var/www/subdomains/questionpro/labs/QuestionPro_DE;
+       index index.html index.php;
+
+       location / {
+	try_files $uri $uri/ /index.php?$args;
+       }
+	location /fr {
+	return 301 $scheme://www.questionpro.com/fr/;
+	}
+	location /nl {
+        return 301 $scheme://www.questionpro.com/nl/;
+        }
+	location /it {
+        return 301 $scheme://www.questionpro.com/it/;
+        }
+
+       location ~ \.php$ {
+             include snippets/fastcgi-php.conf;
+             fastcgi_pass unix:/run/php/php8.2-fpm.sock;
+        }
+        location ~ /\.ht {
+            deny all;
+        }
+
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/wplabs.questionpro.de/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/wplabs.questionpro.de/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    if ($host = wplabs.questionpro.de) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+
+       listen 80;
+       listen [::]:80;
+
+       server_name wplabs.questionpro.de;
+    return 404; # managed by Certbot
+
+
+}

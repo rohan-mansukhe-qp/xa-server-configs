@@ -1,0 +1,50 @@
+server {
+    server_name  www.questionpro.de;
+    root /var/www/subdomains/questionpro/prod/QuestionPro_DE;
+    index index.html index.php;
+
+    location / {
+	    try_files $uri $uri/ /index.php?$args;
+    }
+	location /fr {
+	    return 301 $scheme://www.questionpro.com/fr/;
+	}
+	location /ar {
+            return 301 $scheme://www.questionpro.com/ar/;
+        }
+	location /ja {
+            return 301 $scheme://www.questionpro.com/ja/;
+        }
+	location /nl {
+        return 301 $scheme://www.questionpro.com/nl/;
+    }
+	location /it {
+        return 301 $scheme://www.questionpro.com/it/;
+    }
+    location ~ \.php$ {
+             include snippets/fastcgi-php.conf;
+             fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+		fastcgi_buffers 16 32k;
+    		fastcgi_buffer_size 64k;
+    		fastcgi_busy_buffers_size 64k;
+    }
+    location ~ /\.ht {
+            deny all;
+    }
+
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/www.questionpro.de/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/www.questionpro.de/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    if ($host = www.questionpro.de) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+}
