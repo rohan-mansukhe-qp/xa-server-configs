@@ -39,6 +39,4 @@ server {
        listen [::]:80;
        server_name  brenlabs.questionpro.de;
        return 404; # managed by Certbot
-
-
 }

@@ -1,13 +1,14 @@
 server {
-
-      
        root /var/www/subdomains/brenlabwh/brenntagwh;
        index index.php index.html;
        server_name  brenlabwh.questionpro.de;
         location / {
 		try_files $uri $uri/ /index.php;
        }
-
+       	location = /.env {
+            deny all;
+            return 404;
+        }
        location ~ \.php$ {
              include snippets/fastcgi-php.conf;
              fastcgi_pass unix:/run/php/php7.4-fpm.sock;

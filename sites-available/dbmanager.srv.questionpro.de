@@ -1,16 +1,11 @@
 server {
         server_name dbmanager.srv.questionpro.de;
-
         root /var/www/;
-
         index index.html index.php;
-
-
         location / {
                 try_files $uri $uri/ =404;
         }
-#phpmyadmin block
-
+        #phpmyadmin block
 
         # pass PHP scripts to FastCGI server
         #
@@ -30,10 +25,6 @@ server {
                 deny all;
         }
 
-
-
-
-
     listen 443 ssl; # managed by Certbot
     ssl_certificate /etc/letsencrypt/live/dbmanager.srv.questionpro.de/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/letsencrypt/live/dbmanager.srv.questionpro.de/privkey.pem; # managed by Certbot
@@ -46,10 +37,7 @@ server {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
-
-        server_name dbmanager.srv.questionpro.de;
+    server_name dbmanager.srv.questionpro.de;
     listen 80;
     return 404; # managed by Certbot
-
-
 }

@@ -7,7 +7,7 @@ server {
             deny all;
             return 404;
         }
-	location / {
+	    location / {
         proxy_pass https://127.0.0.1:3002;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
